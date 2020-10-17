@@ -1307,7 +1307,7 @@ static void pcie_bf_mimo_ctrl_decode(struct mwl_priv *priv,
 	fp_data = filp_open(filename, O_RDWR | O_CREAT | O_TRUNC, 0);
 
 	if (!IS_ERR(fp_data)) {
-		__kernel_write(fp_data, str_buf, strlen(str_buf),
+		kernel_write(fp_data, str_buf, strlen(str_buf),
 			       &fp_data->f_pos);
 		filp_close(fp_data, current->files);
 	} else {

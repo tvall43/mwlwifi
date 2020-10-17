@@ -314,10 +314,10 @@ static void core_dump_file(u8 *valbuf, u32 length, u32 region, u32 address,
 			}
 			data_p = buf + j;
 			data_p += sprintf(data_p, "\n");
-			__kernel_write(filp_core, buf, strlen(buf),
+			kernel_write(filp_core, buf, strlen(buf),
 				       &filp_core->f_pos);
 		} else
-			__kernel_write(filp_core, valbuf, length,
+			kernel_write(filp_core, valbuf, length,
 				       &filp_core->f_pos);
 
 		filp_close(filp_core, current->files);
@@ -1735,7 +1735,7 @@ static ssize_t mwl_debugfs_ba_hist_read(struct file *file, char __user *ubuf,
 
 			/* Buffer is full. Write to file and reset buf */
 			if ((strlen(buff) + 36) >= 500) {
-				__kernel_write(filp_bahisto, buff, strlen(buff),
+				kernel_write(filp_bahisto, buff, strlen(buff),
 					       &filp_bahisto->f_pos);
 				mdelay(2);
 				memset(buff, 0, sizeof(buff));
@@ -1760,7 +1760,7 @@ static ssize_t mwl_debugfs_ba_hist_read(struct file *file, char __user *ubuf,
 				data_p += sprintf(data_p, "%8d\n", nobaflag);
 		}
 
-		__kernel_write(filp_bahisto, buff, strlen(buff),
+		kernel_write(filp_bahisto, buff, strlen(buff),
 			       &filp_bahisto->f_pos);
 		len += scnprintf(p + len, size - len,
 				 "hole: %d, expect: %d, bmap0: %d, noba: %d\n",
